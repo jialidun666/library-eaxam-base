@@ -12,7 +12,8 @@ public class Main {
             2. 查看全部图书
             3. 按书名搜索图书
             4. 借阅 / 归还图书
-            5. 退出
+            5. 删除图书
+            6. 退出
             请输入编号：""";
 
     public static void main(String[] args) {
@@ -37,7 +38,8 @@ public class Main {
                 case 2 -> listFlow(library);
                 case 3 -> searchFlow(scanner, library);
                 case 4 -> borrowReturnFlow(scanner, library);
-                case 5 -> {
+                case 5 -> deleteFlow(scanner, library);
+                case 6 -> {
                     System.out.println("感谢使用，再见！");
                     running = false;
                 }
@@ -45,6 +47,21 @@ public class Main {
             }
         }
         scanner.close();
+    }
+    private static void deleteFlow(Scanner scanner, Library library) {
+        System.out.print("请输入图书编号：");
+        if (!scanner.hasNextLine()) {
+            return; // 兼容 EOF 退出
+        }
+        String line = scanner.nextLine().trim();
+        try {
+            int id = Integer.parseInt(line);
+            // 调用 Library 里的删除方法，并打印返回值
+            System.out.println(library.deleteById(id));
+        } catch (NumberFormatException e) {
+            // 非数字输入，保持原有统一提示
+            System.out.println("输入有误，请重新输入");
+        }
     }
 
     private static void addFlow(Scanner scanner, Library library) {

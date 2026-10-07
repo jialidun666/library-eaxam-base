@@ -35,6 +35,16 @@ public class Library {
         return book;
     }
 
+    public String deleteById(int id) {
+        for (int i = 0; i < books.size(); i++) {
+            if (books.get(i).getId() == id) {
+                books.remove(i);
+                return "删除成功";
+            }
+        }
+        return "图书编号不存在";
+    }
+
     /** 全部图书（按添加顺序，返回副本） */
     public List<Book> listAll() {
         return new ArrayList<>(books);
@@ -50,7 +60,7 @@ public class Library {
         for (Book book : books) {
             // BUG(考核): 这里用了 equals 全等匹配，只有书名与关键字完全相同时才会命中。
             // 题目要求"书名包含关键字"，应使用 contains。需求见《01-题目文档.md》任务一。
-            if (book.getName().equals(keyword)) {
+            if (book.getName().contains(keyword)) {
                 result.add(book);
             }
         }
